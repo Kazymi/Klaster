@@ -22,6 +22,12 @@ public class MonoPooled : MonoBehaviour, IPooledObject
         {
             return;
         }
+
+        if (_pool == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         gameObject.SetActive(false);
         _pool.Push(this);
     }

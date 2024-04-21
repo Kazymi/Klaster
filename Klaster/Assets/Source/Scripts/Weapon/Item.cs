@@ -21,7 +21,7 @@ public class Item : MonoPooled
         StartCoroutine(Disable());
     }
 
-    public void ShowWeapon()
+    public void ShowItem()
     {
         StartCoroutine(Show());
     }

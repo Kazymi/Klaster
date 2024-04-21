@@ -38,11 +38,12 @@ public class WeaponSelector : MonoBehaviour
         transformCurrentItem.localPosition = Vector3.zero;
         transformCurrentItem.localRotation = Quaternion.identity;
 
-        currentItem.ShowWeapon();
+        currentItem.ShowItem();
         while (currentItem.IsShow == false)
         {
             yield return null;
         }
+
         isSelectedItem = false;
     }
 }

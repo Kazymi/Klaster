@@ -32,6 +32,11 @@ public class WeaponAnimationController
         return animator.GetCurrentAnimatorStateInfo(0).normalizedTime > normalizeTime;
     }
 
+    public void SetFloat(AnimationsType animationsType, float value)
+    {
+        animator.SetFloat(hashes[animationsType], value);
+    }
+    
     public void Play(AnimationsType animationsType, int layerIndex = 0)
     {
         animator.Play(hashes[animationsType], layerIndex);

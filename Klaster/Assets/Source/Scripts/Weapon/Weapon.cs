@@ -2,6 +2,7 @@
 using DG.Tweening;
 using StateMachine;
 using StateMachine.Conditions;
+using Unity.Netcode.Components;
 using UnityEngine;
 using StateMachine = StateMachine.StateMachine;
 
@@ -28,8 +29,14 @@ public class Weapon : Item
     private void Awake()
     {
         startPositionHands = hands.localPosition;
-        inputSystem = FindObjectOfType<InputSystem>();
+        inputSystem = transform.GetComponentInParent<InputSystem>();
         weaponAnimationController = new WeaponAnimationController(animator);
+    }
+
+    private void OnEnable()
+    {
+        stateMachine = null;
+        StartCoroutine(Show());
     }
 
     protected override IEnumerator Show()
@@ -51,6 +58,7 @@ public class Weapon : Item
 
     private void Update()
     {
+        if (inputSystem.IsOwner == false) return;
         stateMachine?.Tick();
         ScopeCheck();
     }

@@ -1,7 +1,8 @@
 ﻿using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 
-public class FirstPersonAudio : MonoBehaviour
+public class FirstPersonAudio : NetworkBehaviour
 {
     public FirstPersonMovement character;
     public GroundCheck groundCheck;
@@ -64,6 +65,7 @@ public class FirstPersonAudio : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (IsOwner == false) return;
         // Play moving audio if the character is moving and on the ground.
         float velocity = Vector3.Distance(CurrentCharacterPosition, lastCharacterPosition);
         if (velocity >= velocityThreshold && groundCheck && groundCheck.isGrounded)

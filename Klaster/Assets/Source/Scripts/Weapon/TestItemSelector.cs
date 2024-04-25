@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Unity.Netcode;
+using UnityEngine;
 
-public class TestItemSelector : MonoBehaviour
+public class TestItemSelector : NetworkBehaviour
 {
     [SerializeField] private Item selectableItem;
 
@@ -13,10 +14,21 @@ public class TestItemSelector : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && IsOwner)
         {
-            var newItem = Instantiate(selectableItem);
-            weaponSelector.SelectNewItem(newItem);
+            ShowWeaponServerRpc();
         }
+    }
+
+    [ServerRpc]
+    private void ShowWeaponServerRpc()
+    {
+        WeaponShowedClientRpc();
+    }
+
+    [ClientRpc]
+    private void WeaponShowedClientRpc()
+    {
+        weaponSelector.SelectNewItem(selectableItem);
     }
 }

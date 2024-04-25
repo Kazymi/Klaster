@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.Netcode.Components;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class WeaponAnimationController
         {
             hashes.Add(animationsType, Animator.StringToHash(animationsType.ToString()));
         }
+
+       // animator.GetComponent<NetworkAnimator>().OnNetworkSpawn();
     }
 
     public bool IsAnimationPlaying(AnimationsType animationsType)
@@ -29,6 +32,7 @@ public class WeaponAnimationController
         {
             return false;
         }
+
         return animator.GetCurrentAnimatorStateInfo(0).normalizedTime > normalizeTime;
     }
 
@@ -36,7 +40,7 @@ public class WeaponAnimationController
     {
         animator.SetFloat(hashes[animationsType], value);
     }
-    
+
     public void Play(AnimationsType animationsType, int layerIndex = 0)
     {
         animator.Play(hashes[animationsType], layerIndex);

@@ -1,12 +1,13 @@
 ﻿using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Item : MonoPooled
+public class Item : MonoBehaviour
 {
     public bool ReadyToDisable { get; protected set; }
     public bool IsShow { get; protected set; }
 
-    public override void Initialize()
+    public void Awake()
     {
         ReadyToDisable = false;
         ItemInitialize();

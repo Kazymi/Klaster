@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿using Unity.Netcode;
+using UnityEngine;
 
-public class FirstPersonLook : MonoBehaviour
+public class FirstPersonLook : NetworkBehaviour
 {
-    [SerializeField]
-    Transform character;
+    [SerializeField] Transform character;
     public float sensitivity = 2;
     public float smoothing = 1.5f;
 
@@ -19,12 +19,14 @@ public class FirstPersonLook : MonoBehaviour
 
     void Start()
     {
+        if (IsOwner == false) Destroy(GetComponent<Camera>());
         // Lock the mouse cursor to the game screen.
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
+        if (IsOwner == false) return;
         // Get smooth velocity.
         Vector2 mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
         Vector2 rawFrameVelocity = Vector2.Scale(mouseDelta, Vector2.one * sensitivity);
